@@ -12,6 +12,11 @@ import { Drawer as MUIDrawer,
     Divider,
     Button,
     CssBaseline,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
 } from '@mui/material';
 import { makeStyles, useTheme, withStyles, createStyles } from '@mui/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,7 +24,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import clsx from 'clsx';
 import { RouteComponentProps, withRouter, Switch, Route } from 'react-router-dom';
-import { DataTable } from '../../components';
+import { DataTable, DroneForm } from '../../components';
+
 
 const drawerWidth = 240;
 
@@ -99,6 +105,7 @@ export const Dashboard = withRouter(( props:DashProps ) =>{
     const classes = useStyles();
     // const theme = useTheme();
     const [ open, setOpen ] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -106,6 +113,15 @@ export const Dashboard = withRouter(( props:DashProps ) =>{
 
     const handleDrawerClose = () => {
         setOpen(false);
+    }
+
+    //Handle the Dialog Open/Close
+    const handleDialogClickOpen = () => {
+        setDialogOpen(true);
+    }
+
+    const handleDialogClickClose = () => {
+        setDialogOpen(false);
     }
 
     const itemsList = [
@@ -135,7 +151,19 @@ export const Dashboard = withRouter(( props:DashProps ) =>{
                         <Typography variant='h6' noWrap>
                             Dashboard
                         </Typography>
-                        <Button className={classes.toolbar_button}>Create New Drone</Button>
+                        <Button className={classes.toolbar_button} onClick={handleDialogClickOpen} style={{ backgroundColor:'whitesmoke', marginLeft:'auto' }}>Create New Drone</Button>
+                
+                        {/* Dialog Popup begin */}
+                        <Dialog open={dialogOpen} onClose={handleDialogClickClose} aria-labelledby='form-dialog-title'>
+                            <DialogTitle id='form-dialog-title'> Add New Drone</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>Fill Out the Form to Add a Drone</DialogContentText>
+                                <DroneForm />
+                            </DialogContent> 
+                            <DialogActions>
+                                <Button onClick={handleDialogClickClose}>Cancel</Button>
+                            </DialogActions> 
+                        </Dialog>
                 </Toolbar>
             </AppBar>
             <MUIDrawer 
