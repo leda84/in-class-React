@@ -124,6 +124,7 @@ export const Dashboard = withRouter(( props:DashProps ) =>{
         setDialogOpen(false);
     }
 
+    // these are the options that will appear in drawer
     const itemsList = [
         {
             text: 'Home',
